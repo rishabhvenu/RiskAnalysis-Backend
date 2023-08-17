@@ -1,4 +1,4 @@
 from stock import Stock
 
-stock = Stock("ENB")
-print(stock.get_market_cap())
+stock = Stock("TSLA")
+print(stock.get_interest_coverage())

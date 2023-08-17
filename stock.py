@@ -4,6 +4,7 @@ import web_scrape
 class Stock:
     def __init__(self, ticker):
         self.ticker = yf.Ticker(ticker)
+
     def get_market_cap(self):
         outstanding_shares = self.ticker.get_shares_full().values[-1]
         share_price = self.ticker.history(period="1d").Close[0]
@@ -22,14 +23,15 @@ class Stock:
         spy_returns = []
         stock_return_total = 0
         spy_return_total = 0
+        
         for i in range(1, len(stock_history)):
             current_day_close_stock = stock_history[i]
-            previous_day_close_stock = stock_history[i-1]
+            previous_day_close_stock = stock_history[i - 1]
             stock_return = (current_day_close_stock - previous_day_close_stock) / previous_day_close_stock
             stock_return_total += stock_return
             stock_returns.append(stock_return)
             current_day_close_spy = spy_history[i]
-            previous_day_close_spy = spy_history[i-1]
+            previous_day_close_spy = spy_history[i - 1]
             spy_return = (current_day_close_spy - previous_day_close_spy) / previous_day_close_spy
             spy_return_total += spy_return
             spy_returns.append(spy_return)
@@ -60,4 +62,9 @@ class Stock:
         total_debt_to_equity_ratio = total_debt / shareholders_equity
         return total_debt_to_equity_ratio
 
-
+    def get_interest_coverage(self):
+        symbol = self.ticker.info["symbol"]
+        EBIT = web_scrape.get_EBIT(symbol)
+        interest_expense = web_scrape.get_interest_expense(symbol)
+        interest_coverage_ratio = EBIT / interest_expense
+        return interest_coverage_ratio

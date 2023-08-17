@@ -10,6 +10,14 @@ def get_shareholders_equity(ticker):
     return get_esg_tile_value(f"https://www.macroaxis.com/financial-statements/{ticker}/Shareholders-Equity-USD")
 
 
+def get_EBIT(ticker):
+    return get_esg_tile_value(f"https://www.macroaxis.com/financial-statements/{ticker}/Earning-Before-Interest-and-Taxes-EBIT")
+
+
+def get_interest_expense(ticker):
+    return get_esg_tile_value(f"https://www.macroaxis.com/financial-statements/{ticker}/Interest-Expense")
+
+
 def get_esg_tile_value(url):
     micro_axis = requests.get(url).text
     soup = BeautifulSoup(micro_axis, "lxml")
@@ -22,5 +30,7 @@ def get_esg_tile_value(url):
         amt *= 1000000000
     elif ident == "Million":
         amt *= 1000000
+    elif ident == "Thousand":
+        amt *= 1000
 
     return amt
