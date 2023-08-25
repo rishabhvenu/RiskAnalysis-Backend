@@ -9,7 +9,6 @@ class Stock:
         outstanding_shares = self.ticker.get_shares_full().values[-1]
         share_price = self.ticker.history(period="1d").Close[0]
         market_cap = outstanding_shares * share_price
-        print(outstanding_shares)
         return market_cap
 
     def get_beta(self):
